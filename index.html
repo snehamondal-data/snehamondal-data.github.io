@@ -73,6 +73,10 @@ p{margin:0 0 .9rem}
 .note{font-size:.95rem; color:var(--soft)}
 .repo{font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.93rem; font-weight:500; margin:.2rem 0 0}
 
+h3.group{font-size:1.02rem; margin:2rem 0 .8rem; display:flex; flex-wrap:wrap; align-items:baseline; gap:.2rem .7rem}
+li .lead{font-family:"Schibsted Grotesk",system-ui,sans-serif; font-weight:500}
+h3.group .where{font-weight:500; font-size:.88rem; color:var(--soft)}
+#work > p{margin-bottom:.4rem}
 ul.plain{margin:0; padding-left:1.1rem}
 ul.plain li{margin:0 0 .75rem}
 ul.plain li::marker{color:var(--oxblood)}
@@ -111,11 +115,27 @@ footer p{margin:0 0 .35rem}
 
 <section aria-labelledby="work">
   <h2 id="work">At work</h2>
+  <p>I built the data infrastructure and warehouse tools that connected product records to physical operations, first at Veiled Collection and then across six clients at YNK Incubator.</p>
+
+  <h3 class="group">Warehouse tools <span class="where">Veiled Collection</span></h3>
   <ul class="plain">
-    <li>Traced an <strong>$8,000</strong> a month cloud bill, with nothing erroring, to a runaway Eventarc to Cloud Run feedback loop: a service wrote to a bucket, the write fired an event, and the event re-invoked the service. Fixed it architecturally with event-payload gating, deterministic task names, scaling minimum instances to zero, and partitioning and clustering. <strong>$300</strong> a month, and it stayed there. <span class="note">Veiled Collection</span></li>
-    <li>Cut operational data errors <strong>95%</strong> across <strong>43K+</strong> SKUs with validation gates, daily snapshots and snapshot-diff reconciliation against source, so failures were loud instead of silent. <span class="note">Veiled Collection</span></li>
-    <li>Built the Buy Plan forecast (sell-out dates, reorder points, <strong>6-month</strong> order quantities by size and color) that the buying team planned purchasing against, then validated it against actual sell-through and corrected the model where projections drifted. <span class="note">Veiled Collection</span></li>
-    <li>Built and owned the multi-tenant platform for <strong>six</strong> DTC brands: event-driven ingestion on Cloud Run, Pub/Sub, Eventarc and Cloud Tasks into a BigQuery warehouse per client, tenant separation enforced at the IAM layer, and transformations as version-controlled SQL in Dataform with assertions and CI/CD. <span class="note">YNK Incubator</span></li>
+    <li><span class="lead">Modeled the warehouse as data.</span> A grid generator (Apps Script and a Cloud Function) turned the layout into about <strong>8,000</strong> positions in snake-pattern walking order, stored in a BigQuery Master Grid, with subdivided slots so several SKUs could share one location.</li>
+    <li><span class="lead">One-click product assignment.</span> An installable Apps Script add-on picked free positions in walking order, recorded them in the Master Grid and updated Shopify, with ShipStation syncing nightly. Overlapping runs were batched and reserved their slots, so two runs wouldn't claim the same slot.</li>
+    <li><span class="lead">Tools staff could run from their sheets.</span> Decommissioning, barcode processing and zero-grid review, which flagged mismatches between Shopify inventory and assignments for review before any location was released.</li>
+  </ul>
+
+  <h3 class="group">Platform and data quality <span class="where">YNK Incubator</span></h3>
+  <ul class="plain">
+    <li><span class="lead">An operations portal for six clients.</span> Assignments, transfers and data preparation moved out of spreadsheets into a portal with a workspace per client (Vercel, Neon Postgres, Cloud Functions and Cloud Run), with tested JSON contracts between portal and backend.</li>
+    <li><span class="lead">A multi-tenant data platform.</span> Event-driven ingestion into a BigQuery warehouse per client with IAM tenant isolation, Dataform with assertions and CI/CD, and resumable Cloud Tasks backfills that used staging and MERGE so reruns didn't duplicate orders.</li>
+    <li><span class="lead">Records that match the shelf.</span> Adapted inventory verification to each client's data. For one client with duplicated and recreated products and reused SKUs and barcodes, I worked with the warehouse managers to check physical items, corrected the records, assigned unique identifiers and relabeled stock so system and shelf agreed.</li>
+  </ul>
+
+  <h3 class="group">Reliability, forecasting and cost <span class="where">Veiled Collection</span></h3>
+  <ul class="plain">
+    <li><span class="lead">Fewer silent errors.</span> Reconciliation against source and daily snapshot checks cut operational data errors about <strong>95%</strong> across <strong>43K+</strong> SKUs.</li>
+    <li><span class="lead">The Buy Plan forecast.</span> Sell-out dates, reorder points and <strong>6-month</strong> order quantities the buying team planned purchasing against, checked against actual sell-through.</li>
+    <li><span class="lead">A cloud bill with nothing erroring.</span> Traced <strong>$8,000</strong> a month to an Eventarc to Cloud Run feedback loop and fixed it architecturally: <strong>$300</strong> a month.</li>
   </ul>
 </section>
 
