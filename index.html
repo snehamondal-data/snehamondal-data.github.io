@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sneha Mondal, data engineer</title>
+<meta name="description" content="Sneha Mondal is a data engineer. Production data platforms on GCP for DTC fashion brands, an M.S. NLP capstone, and personal projects with tested pipelines and LLM agents.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7F5;
+  --ink:#1A2230;
+  --soft:#556070;
+  --rule:#D8DCE1;
+  --oxblood:#7A1F2B;
+  --wash:#EEF0EE;
+  --measure:40rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141922; --ink:#E6E9EE; --soft:#9AA4B2; --rule:#2C3442; --oxblood:#E07A86; --wash:#1B212C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141922; --ink:#E6E9EE; --soft:#9AA4B2; --rule:#2C3442; --oxblood:#E07A86; --wash:#1B212C;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Literata",Georgia,serif; font-size:1.0625rem; line-height:1.65;
+  font-optical-sizing:auto;
+}
+a{color:inherit; text-decoration-color:var(--oxblood); text-decoration-thickness:1.5px; text-underline-offset:.18em}
+a:hover{color:var(--oxblood)}
+a:focus-visible{outline:2px solid var(--oxblood); outline-offset:3px; border-radius:2px}
+.wrap{max-width:var(--measure); margin:0 auto; padding:0 1rem}
+h1,h2,h3,.sans{font-family:"Schibsted Grotesk",system-ui,sans-serif}
+strong{font-weight:600}
+
+/* hero */
+header{padding:4.5rem 0 3rem}
+.name{font-size:1.05rem; font-weight:600; margin:0 0 .15rem; letter-spacing:.005em}
+.role{color:var(--soft); margin:0 0 2.5rem; font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.95rem}
+.creed{
+  font-family:"Schibsted Grotesk",system-ui,sans-serif; font-weight:600;
+  font-size:clamp(2rem, 6vw, 3.1rem); line-height:1.08; letter-spacing:-.012em; margin:0;
+}
+.creed{text-wrap:balance}
+.hook{font-family:"Schibsted Grotesk",system-ui,sans-serif; font-weight:500; color:var(--soft);
+  font-size:clamp(1.12rem, 2.4vw, 1.32rem); line-height:1.45; margin:1rem 0 0; max-width:34rem; text-wrap:pretty}
+.intro{margin:2.25rem 0 0; max-width:36rem}
+.links{display:flex; flex-wrap:wrap; gap:.4rem 1.4rem; margin:1.6rem 0 0; padding:0; list-style:none;
+  font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.95rem; font-weight:500}
+
+/* sections */
+section{padding:2.75rem 0; border-top:1px solid var(--rule)}
+h2{font-size:1.35rem; font-weight:700; margin:0 0 1.5rem; letter-spacing:-.005em}
+h3{font-size:1.15rem; font-weight:700; margin:0; line-height:1.3}
+.meta{color:var(--soft); font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.9rem; margin:.25rem 0 .9rem}
+p{margin:0 0 .9rem}
+.project + .project{margin-top:2.6rem; padding-top:2.6rem; border-top:1px dashed var(--rule)}
+.proves{font-style:italic; color:var(--ink); margin-bottom:1rem}
+
+/* the numbers that tie out: a small ledger, right-aligned figures */
+.ledger{margin:1.1rem 0 1.1rem; padding:.85rem 1rem; background:var(--wash); border-left:3px solid var(--oxblood);
+  font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.93rem}
+.ledger div{display:flex; justify-content:space-between; gap:1rem; padding:.18rem 0}
+.ledger dt{color:var(--soft)}
+.ledger dd{margin:0; font-weight:600; font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap}
+.note{font-size:.95rem; color:var(--soft)}
+.repo{font-family:"Schibsted Grotesk",system-ui,sans-serif; font-size:.93rem; font-weight:500; margin:.2rem 0 0}
+
+ul.plain{margin:0; padding-left:1.1rem}
+ul.plain li{margin:0 0 .75rem}
+ul.plain li::marker{color:var(--oxblood)}
+
+.skills{display:grid; grid-template-columns:9.5rem 1fr; gap:.55rem 1.25rem; margin:0; font-size:.97rem}
+.skills dt{font-family:"Schibsted Grotesk",system-ui,sans-serif; font-weight:600}
+.skills dd{margin:0}
+@media (max-width:34rem){ .skills{grid-template-columns:1fr; gap:.1rem} .skills dd{margin-bottom:.7rem} }
+
+footer{border-top:1px solid var(--rule); padding:2.25rem 0 3.5rem; color:var(--soft); font-size:.95rem}
+footer p{margin:0 0 .35rem}
+
+@media (prefers-reduced-motion:no-preference){
+  .creed{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .hook{animation:rise .7s .15s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0; transform:translateY(.35em)} to{opacity:1; transform:none}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="name sans">Sneha Mondal</p>
+  <p class="role">Data engineer in the New York City area</p>
+  <h1 class="creed">I love solving complex problems.</h1>
+  <p class="hook">A cloud bill climbing to $8,000 a month with nothing erroring. A count that won't tie back to source. I dig until it clicks, learn whatever the fix needs, and build it so nobody downstream has to think about it again.</p>
+  <p class="intro">For 3+ years I did that as the only data engineer at Veiled Collection, a modest-fashion DTC brand, and then at YNK Incubator, the 3PL and parent company behind it, where I built the data platform for <strong>six</strong> DTC brands. That meant building the platform rather than operating one someone else chose: the ingestion, the warehouse, the models, the quality checks and the documentation.</p>
+  <ul class="links">
+    <li><a href="Sneha_Mondal_Resume_DE.pdf">Résumé (PDF)</a></li>
+    <li><a href="https://github.com/snehamondal-data">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/sneha-mondal23/">LinkedIn</a></li>
+    <li><a href="mailto:sm6503@rit.edu">sm6503@rit.edu</a></li>
+  </ul>
+</header>
+
+<section aria-labelledby="work">
+  <h2 id="work">At work</h2>
+  <ul class="plain">
+    <li>Traced an <strong>$8,000</strong> a month cloud bill, with nothing erroring, to a runaway Eventarc to Cloud Run feedback loop: a service wrote to a bucket, the write fired an event, and the event re-invoked the service. Fixed it architecturally with event-payload gating, deterministic task names, scaling minimum instances to zero, and partitioning and clustering. <strong>$300</strong> a month, and it stayed there. <span class="note">Veiled Collection</span></li>
+    <li>Cut operational data errors <strong>95%</strong> across <strong>43K+</strong> SKUs with validation gates, daily snapshots and snapshot-diff reconciliation against source, so failures were loud instead of silent. <span class="note">Veiled Collection</span></li>
+    <li>Built the Buy Plan forecast (sell-out dates, reorder points, <strong>6-month</strong> order quantities by size and color) that the buying team planned purchasing against, then validated it against actual sell-through and corrected the model where projections drifted. <span class="note">Veiled Collection</span></li>
+    <li>Built and owned the multi-tenant platform for <strong>six</strong> DTC brands: event-driven ingestion on Cloud Run, Pub/Sub, Eventarc and Cloud Tasks into a BigQuery warehouse per client, tenant separation enforced at the IAM layer, and transformations as version-controlled SQL in Dataform with assertions and CI/CD. <span class="note">YNK Incubator</span></li>
+  </ul>
+</section>
+
+<section aria-labelledby="projects">
+  <h2 id="projects">Projects</h2>
+
+  <article class="project" aria-labelledby="p-capstone">
+    <h3 id="p-capstone">Detecting coded racism in football commentary</h3>
+    <p class="meta">M.S. Data Science capstone, Rochester Institute of Technology, 2025. Advisor: Dr. Ashique Khudabukhsh</p>
+    <p class="proves">A hybrid NLP system, and an honest account of where it fails.</p>
+    <p>General toxicity classifiers catch slurs. They miss remarks like "tactical IQ" or "naturally athletic but lacking technical skill", which can be ordinary analysis or a stereotype depending on context. So the design treats those phrases as candidate cues resolved by context, not as a blocklist.</p>
+    <p>The system combines a fine-tuned BERT classifier (benchmarked against RoBERTa, which it beat at <strong>0.72</strong> vs <strong>0.61</strong> F1), a linear SVM over pooled [CLS] embeddings, and a rule layer of 60+ coded-language phrases with exemptions for football-analysis vocabulary, joined by a rule override and a majority vote. The data is <strong>1,031</strong> examples: 950 hand-labelled comments from YouTube, Reddit, Twitter and news, plus synthetic templates, including control examples that teach the model what not to flag.</p>
+    <dl class="ledger" aria-label="Held-out results">
+      <div><dt>Accuracy, held-out</dt><dd>75.2%</dd></div>
+      <div><dt>F1, racist class</dt><dd>0.68</dd></div>
+      <div><dt>Precision / recall, racist class</dt><dd>62.3% / 76.0%</dd></div>
+      <div><dt>Mean confidence when wrong / when right</dt><dd>0.82 / 0.69</dd></div>
+    </dl>
+    <p>The last line is the finding I would lead with. The model was most confident when it was wrong, so its confidence could not be used to route uncertain cases to a human as-is. That is a calibration failure, and the write-up reports it rather than burying it. One stage table in the poster lists <strong>0.76</strong> F1 for the final hybrid; I report the lower held-out figure.</p>
+    <p class="repo"><a href="https://github.com/snehamondal-data/racism-in-football-nlp">racism-in-football-nlp on GitHub</a></p>
+    <p class="note">The repository holds the final poster and the project summary. The source code was lost before it was pushed, and the README says so.</p>
+  </article>
+
+  <article class="project" aria-labelledby="p-agent">
+    <h3 id="p-agent">Marketing data reliability pipeline, with an analytics agent on top</h3>
+    <p class="meta">Personal project, 2026. Synthetic data for two brands</p>
+    <p class="proves">A pipeline where a rerun inserts zero rows, and an LLM agent tested like any other transformation.</p>
+    <p>Python ingestion from a paginated, rate-limited API (Retry-After backoff, watermark checkpoints, append-only loads) into DuckDB, then dbt staging and marts for two tenants. It reconciles ad spend against revenue net of refunds, reports MER, ROAS, AOV and CAC, and flags ad spend on products about to stock out. On the test data the alert fired <strong>18</strong> days before the stockout.</p>
+    <p>The agent takes a plain-English question and answers from the marts through three tools. Generated SQL is parsed and constrained to a single SELECT, scoped to one tenant chosen on the command line, capped on rows, run time and turns, and every tool call is logged.</p>
+    <dl class="ledger" aria-label="Test and eval results">
+      <div><dt>dbt tests per tenant</dt><dd>84</dd></div>
+      <div><dt>pytest tests</dt><dd>46</dd></div>
+      <div><dt>Eval score, with metric definitions in the prompt</dt><dd>10/10</dd></div>
+      <div><dt>Eval score, with them removed</dt><dd>10/10</dd></div>
+    </dl>
+    <p>Equal scores mean the question set was too easy to tell the two prompts apart. I report that as a finding about the eval, not as proof the definitions don't matter. Building the ground-truth SQL for the evals surfaced a mart whose grain missed <strong>$347</strong> of lost sales: in-stock items cancelled along with an out-of-stock one. I added a per-order model that measures the full basket loss and the ad cost of cancelled orders.</p>
+    <p class="repo"><a href="https://github.com/snehamondal-data/marketing-data-reliability-pipeline">marketing-data-reliability-pipeline on GitHub</a></p>
+  </article>
+
+  <article class="project" aria-labelledby="p-trend">
+    <h3 id="p-trend">Trickle-Down Trend Tracker</h3>
+    <p class="meta">Personal project, 2026</p>
+    <p class="proves">A hypothesis I expected to confirm, and a write-up that says the data contradicted it.</p>
+    <p>Does a Fall/Winter 2026 runway trend travel from luxury to semi-luxury to affordable brands, and how many weeks does it take? The tracker follows <strong>14</strong> hand-curated trends across three brand tiers, using news-coverage volume from GDELT as a measure of press momentum. It measures press, not sales. Ingestion is cached and rate-limit aware, layered raw to staging to marts, and fully recomputed on each run.</p>
+    <p>Per-tier baseline normalization so luxury's structurally higher press volume couldn't manufacture the predicted result; <strong>58</strong> tests. The data contradicted the hypothesis and the write-up says so. The luxury to semi-luxury lag did not hold, and fuller data strengthened that. A first reading of the semi-luxury to affordable step was overstated; more data removed it, and the README now says both.</p>
+    <p>A small query agent sits on the marts. Its evals pass <strong>6/6</strong>, including refusing to compute a lag for a tier that was never collected and refusing to describe press coverage as sales.</p>
+    <p class="repo"><a href="https://github.com/snehamondal-data/fashion-trend-engine">fashion-trend-engine on GitHub</a></p>
+  </article>
+</section>
+
+<section aria-labelledby="earlier">
+  <h2 id="earlier">Earlier analyses at RIT</h2>
+  <ul class="plain">
+    <li><a href="https://github.com/snehamondal-data/cancer-incidence-analysis">US cancer incidence</a>: multiple regression over roughly <strong>30,000</strong> county observations, with multicollinearity screening and residual diagnostics, then Tableau benchmarks for a health system. Team of four.</li>
+    <li><a href="https://github.com/snehamondal-data/TwitterSentimentAnalysis">Tesla Twitter sentiment</a>: <strong>2,000</strong> tweets scored with three sentiment lexicons in R, testing whether they agree rather than assuming it, visualized in Tableau. Team of four.</li>
+    <li><a href="https://github.com/snehamondal-data/ReadmissionOfPatients">Hospital readmission</a>: predicting readmission for diabetic patients, with exploratory and final notebooks on a train/test split.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="skills">
+  <h2 id="skills">What I work with</h2>
+  <dl class="skills">
+    <dt>Languages</dt><dd>Python, SQL, JavaScript/TypeScript, R, Java</dd>
+    <dt>Cloud and warehouse</dt><dd>GCP: BigQuery, Cloud Run, Cloud Functions, Pub/Sub, Eventarc, Cloud Tasks, Cloud Scheduler. Snowflake. PostgreSQL, MySQL, SQL Server, MongoDB</dd>
+    <dt>Transformation</dt><dd>Dataform, dbt, DuckDB, Airflow. Dimensional modeling, SCD Type 2, incremental models, checkpointed backfills, idempotent replay</dd>
+    <dt>Reliability</dt><dd>Data contracts, fail-loud validation, reconciliation against source, freshness and row-count alerting, pytest, Docker, Git, CI/CD</dd>
+    <dt>Analytics and ML</dt><dd>Looker, Tableau, Power BI. scikit-learn, BERT, NLP</dd>
+  </dl>
+</section>
+
+<footer>
+  <p>M.S. Data Science, Rochester Institute of Technology, 2025. B.S. (Honors) Mathematics, University of Calcutta, 2021.</p>
+  <p>Open to data engineering roles. <a href="mailto:sm6503@rit.edu">sm6503@rit.edu</a></p>
+</footer>
+
+</div>
+</body>
+</html>
