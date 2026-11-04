@@ -112,7 +112,7 @@ footer p{margin:0 0 .35rem}
   <p class="role">Data engineer in the New York City area</p>
   <h1 class="creed">I love solving complex problems.</h1>
   <p class="hook">A cloud bill climbing to $8,000 a month with nothing erroring. A count that won't tie back to source. I dig until it clicks, learn whatever the fix needs, and build it so nobody downstream has to think about it again.</p>
-  <p class="intro">I'm a data engineer, 3+ years in, working toward AI engineering. As the only data engineer on a production platform, I built all of it: the ingestion, the warehouse, the models, the quality checks and the tools operations teams worked in. I've worked with a lot of tools, with many more to come: building and growing every day.</p>
+  <p class="intro">I'm a data engineer, 3+ years in, who builds data systems and AI tools directly for the people who use them, now focused on forward-deployed and data engineering roles. As the lead data engineer on a production platform, working alongside a software engineer, I built the ingestion, the warehouse, the models, the quality checks and the tools operations teams worked in. Problem solver, building and growing every day.</p>
   <ul class="links">
     <li><a href="Sneha_Mondal_Resume_DE.pdf">Résumé (PDF)</a></li>
     <li><a href="https://github.com/snehamondal-data">GitHub</a></li>
@@ -150,6 +150,22 @@ footer p{margin:0 0 .35rem}
 <section aria-labelledby="projects">
   <h2 id="projects">Projects</h2>
 
+  <article class="project" aria-labelledby="p-recon">
+    <h3 id="p-recon">Payments Reconciliation Copilot</h3>
+    <p class="meta">Personal project, 2026. Built forward-deployed style for a fictional payments startup, on synthetic data</p>
+    <p class="proves">A reconciliation system I can prove is correct, and an AI copilot on top that can't change anything without a person.</p>
+    <p>A finance team was matching three records of the same money by hand: what the payment processor says happened, what the bank actually received, and what the company's books recorded. I scoped it like a customer engagement, then built it: the three sources stream through Kafka with schema contracts and a dead-letter queue into an idempotent loader, and dbt reconciles them while respecting the bank's two-business-day settlement window. The same models run on DuckDB and Snowflake, and an Airflow DAG re-checks pending settlements daily as their windows close.</p>
+    <p>For each mismatch, a Claude-based copilot investigates through six typed, read-only tools under a least-privilege Snowflake role, then proposes a fix that a human must approve. Safety rules live in code, not the prompt. The ops team can also ask plain-English questions, answered only through governed metrics in a dbt semantic layer (MetricFlow).</p>
+    <dl class="ledger" aria-label="Results">
+      <div><dt>Duplicate rows after a full Kafka replay</dt><dd>0</dd></div>
+      <div><dt>Planted exceptions found, no false alarms</dt><dd>30 of 30</dd></div>
+      <div><dt>DuckDB vs Snowflake results</dt><dd>Identical</dd></div>
+      <div><dt>Unsafe AI proposals, 35 planted cases, with code-enforced escalation rules</dt><dd>0</dd></div>
+    </dl>
+    <p>The model alone made one unsafe proposal: it treated an exact-amount coincidence as proof. I didn't tune the prompt against my own test set; I added a rule in code that the agent can raise concern but never lower it. A harder test, with two problems on one payment, then exposed a gap, which I fixed against freshly generated cases. The honest cost: two unnecessary escalations. <strong>328</strong> tests.</p>
+    <p class="repo"><a href="https://github.com/snehamondal-data/payments-recon-copilot">payments-recon-copilot on GitHub</a></p>
+  </article>
+
   <article class="project" aria-labelledby="p-capstone">
     <h3 id="p-capstone">Detecting coded racism in football commentary</h3>
     <p class="meta">M.S. Data Science capstone, Rochester Institute of Technology, 2025. Advisor: Dr. Ashique Khudabukhsh</p>
@@ -172,12 +188,12 @@ footer p{margin:0 0 .35rem}
     <p class="meta">Personal project, 2026. Synthetic data for two brands</p>
     <p class="proves">A pipeline where a rerun inserts zero rows, and an LLM agent tested like any other transformation.</p>
     <p>Python ingestion from a paginated, rate-limited API (Retry-After backoff, watermark checkpoints, append-only loads) into DuckDB, then dbt staging and marts for two tenants. It reconciles ad spend against revenue net of refunds, reports MER, ROAS, AOV and CAC, and flags ad spend on products about to stock out. On the test data the alert fired <strong>18</strong> days before the stockout.</p>
-    <p>The agent takes a plain-English question and answers from the marts through three tools. Generated SQL is parsed and constrained to a single SELECT, scoped to one tenant chosen on the command line, capped on rows, run time and turns, and every tool call is logged.</p>
+    <p>The agent takes a plain-English question and answers from the marts through three tools. Generated SQL is parsed and constrained to a single SELECT, scoped to one tenant chosen on the command line, capped on rows, run time and turns, and every tool call is logged. When it can't answer safely, it returns a fixed reply, a clarifying question or a validated fallback report instead of guessing.</p>
     <dl class="ledger" aria-label="Test and eval results">
       <div><dt>dbt tests per tenant</dt><dd>84</dd></div>
-      <div><dt>pytest tests</dt><dd>46</dd></div>
-      <div><dt>Eval score, with metric definitions in the prompt</dt><dd>10/10</dd></div>
-      <div><dt>Eval score, with them removed</dt><dd>10/10</dd></div>
+      <div><dt>pytest tests</dt><dd>83</dd></div>
+      <div><dt>Eval score, original 10 questions, with metric definitions</dt><dd>10/10</dd></div>
+      <div><dt>Same 10 questions, definitions removed</dt><dd>10/10</dd></div>
     </dl>
     <p>Equal scores mean the question set was too easy to tell the two prompts apart. I report that as a finding about the eval, not as proof the definitions don't matter. Building the ground-truth SQL for the evals surfaced a mart whose grain missed <strong>$347</strong> of lost sales: in-stock items cancelled along with an out-of-stock one. I added a per-order model that measures the full basket loss and the ad cost of cancelled orders.</p>
     <p class="repo"><a href="https://github.com/snehamondal-data/marketing-data-reliability-pipeline">marketing-data-reliability-pipeline on GitHub</a></p>
@@ -186,11 +202,16 @@ footer p{margin:0 0 .35rem}
   <article class="project" aria-labelledby="p-trend">
     <h3 id="p-trend">Trickle-Down Trend Tracker</h3>
     <p class="meta">Personal project, 2026</p>
-    <p class="proves">A hypothesis I expected to confirm, and a write-up that says the data contradicted it.</p>
-    <p>Does a Fall/Winter 2026 runway trend travel from luxury to semi-luxury to affordable brands, and how many weeks does it take? The tracker follows <strong>14</strong> hand-curated trends across three brand tiers, using news-coverage volume from GDELT as a measure of press momentum. It measures press, not sales. Ingestion is cached and rate-limit aware, layered raw to staging to marts, and fully recomputed on each run.</p>
-    <p>Per-tier baseline normalization so luxury's structurally higher press volume couldn't manufacture the predicted result; <strong>58</strong> tests. The data contradicted the hypothesis and the write-up says so. The luxury to semi-luxury lag did not hold, and fuller data strengthened that. A first reading of the semi-luxury to affordable step was overstated; more data removed it, and the README now says both.</p>
-    <p>A small query agent sits on the marts. Its evals pass <strong>6/6</strong>, including refusing to compute a lag for a tier that was never collected and refusing to describe press coverage as sales.</p>
-    <p class="repo"><a href="https://github.com/snehamondal-data/fashion-trend-engine">fashion-trend-engine on GitHub</a></p>
+    <p class="proves">A theory I expected to confirm, data that contradicted it, and a tool that refuses to guess.</p>
+    <p>Fashion's old rule says trends start on luxury runways, semi-luxury brands adapt them, and high-street brands mass-produce them last. I tracked weekly news coverage of <strong>14</strong> Fall/Winter 2026 trends across four brand tiers, measuring each trend as a share of its tier's own coverage, because luxury gets far more press no matter what. It measures press momentum, not sales.</p>
+    <dl class="ledger" aria-label="What the data showed">
+      <div><dt>Semi-luxury broke out before luxury</dt><dd>6 of 9</dd></div>
+      <div><dt>High-street followed semi-luxury</dt><dd>6 of 12</dd></div>
+      <div><dt>Suede's weekly share: shoes and bags vs other tiers (median)</dt><dd>13.3% vs 1.6%</dd></div>
+      <div><dt>Hidden delay recovered, simulated store</dt><dd>14 of 14</dd></div>
+    </dl>
+    <p>Before trusting the method, I tested it on a simulated store with planted delays, noisy data and a null test; the null test caught a flaw, which I fixed. On top sits a planning tool: an early warning from post-show press, a capped buy-plan adjustment and launch timing. When GDELT turned out to be missing whole days, the tool marked those readings "Incomplete data" instead of reporting them. <strong>117</strong> tests.</p>
+    <p class="repo"><a href="https://snehamondal-data.github.io/fashion-trend-engine/">Live dashboard</a> &nbsp;·&nbsp; <a href="https://github.com/snehamondal-data/fashion-trend-engine">fashion-trend-engine on GitHub</a></p>
   </article>
 </section>
 
@@ -207,10 +228,10 @@ footer p{margin:0 0 .35rem}
   <h2 id="skills">What I work with</h2>
   <dl class="skills">
     <dt>Languages</dt><dd>Python, SQL, JavaScript/TypeScript, R, Java</dd>
-    <dt>Cloud and warehouse</dt><dd>GCP: BigQuery, Cloud Run, Cloud Functions, Pub/Sub, Eventarc, Cloud Tasks, Cloud Scheduler. Snowflake. PostgreSQL, MySQL, SQL Server, MongoDB</dd>
-    <dt>Transformation</dt><dd>Dataform, dbt, DuckDB, Airflow. Dimensional modeling, SCD Type 2, incremental models, checkpointed backfills, idempotent replay</dd>
+    <dt>Cloud and warehouse</dt><dd>GCP: BigQuery, Cloud Run, Cloud Functions, Pub/Sub, Eventarc, Cloud Tasks, Cloud Scheduler. PostgreSQL, MySQL, SQL Server, MongoDB. Snowflake (project scale)</dd>
+    <dt>Transformation and streaming</dt><dd>Dataform (in production). dbt and its semantic layer (MetricFlow), Airflow, Kafka, DuckDB (project scale). Dimensional modeling, SCD Type 2, incremental models, checkpointed backfills, idempotent replay</dd>
     <dt>Reliability</dt><dd>Data contracts, fail-loud validation, reconciliation against source, freshness and row-count alerting, pytest, Docker, Git, CI/CD</dd>
-    <dt>Analytics and ML</dt><dd>Looker, Tableau, Power BI. scikit-learn, BERT, NLP</dd>
+    <dt>AI and analytics</dt><dd>Anthropic API: LLM agents with typed tools, structured output, guardrails and evals. Looker Studio, Tableau. scikit-learn, BERT, NLP</dd>
   </dl>
 </section>
 
