@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sneha Mondal, data engineer</title>
-<meta name="description" content="Sneha Mondal is a data engineer. Production data platforms on GCP for DTC fashion brands, an M.S. NLP capstone, and personal projects with tested pipelines and LLM agents.">
+<meta name="description" content="Sneha Mondal is a data engineer who builds data systems and AI tools for the people who use them: production data platforms on Google Cloud, a config-driven Databricks onboarding lakehouse, a payments reconciliation copilot, and LLM agents with evals.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://snehamondal-data.github.io/">
-<meta property="og:title" content="Sneha Mondal, data and AI engineer">
-<meta property="og:description" content="Production data platforms on Google Cloud, warehouse tools for six DTC brands, and an M.S. NLP capstone.">
+<meta property="og:title" content="Sneha Mondal, data engineer">
+<meta property="og:description" content="Production data platforms on Google Cloud, a Databricks onboarding lakehouse and a payments reconciliation copilot built forward-deployed style, and LLM agents with evals.">
 <meta property="og:image" content="https://snehamondal-data.github.io/portfolio-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
@@ -150,19 +150,35 @@ footer p{margin:0 0 .35rem}
 <section aria-labelledby="projects">
   <h2 id="projects">Projects</h2>
 
+  <article class="project" aria-labelledby="p-holdings">
+    <h3 id="p-holdings">Holdings Onboarding Lakehouse</h3>
+    <p class="meta">Personal project, 2026. Built forward-deployed style for a fictional investment-data platform, on synthetic data</p>
+    <p class="proves">Onboarding a new bank or a whole new client is a config file, not new code, and every row is accounted for.</p>
+    <p>An investment-data platform grows by onboarding clients fast, but every client's holdings arrive from different custodian banks, each with its own file format, number style and identifiers. I built a Databricks lakehouse where files land in bronze exactly once (Auto Loader plus a SHA-256 content hash, so a file re-sent under a new name is caught), are mapped in silver into one position model with data-quality expectations and security-master resolution, and are reconciled in gold against the client's own records, with every difference given a reason. Each client has its own Unity Catalog schema, and lineage shows no client reads another's data. Files can also arrive through an AWS landing zone I defined in CloudFormation: S3 triggers a Lambda that validates and forwards each file, quarantines bad ones and dead-letters failed forwards. I tested it end to end, then tore it down.</p>
+    <p>An AI assistant drafts a new source's config from one sample file using read-only tools; a dry run tests the draft and a person approves it. When I audited my own eval, the config files were unreachable but the prompt had been written knowing the answers, so I added a test that fails on any leaked value and re-ran once with a frozen prompt.</p>
+    <dl class="ledger" aria-label="Results">
+      <div><dt>A second client onboarded, engine changes</dt><dd>109 lines of YAML, 0</dd></div>
+      <div><dt>Rows tested; bronze speed-up from parallel ingestion</dt><dd>15M, 2.1x</dd></div>
+      <div><dt>S3 upload to validated gold through the AWS landing zone</dt><dd>11.6 min</dd></div>
+      <div><dt>Config fields the AI drafted correctly, leakage-tested eval on 8 sources</dt><dd>128 of 128</dd></div>
+    </dl>
+    <p>I measured before optimizing: at 15 million rows bronze was the bottleneck, so I ran the source streams in parallel and kept it. Liquid clustering read 60% fewer bytes on one query but saved no time, so I dropped it and said so. The fourth bank exposed two gaps in the engine (date order and comma decimals), which I fixed generically rather than for that bank. Planted problems were all found with the right reason, and re-running changes nothing. <strong>129</strong> tests.</p>
+    <p class="repo"><a href="https://github.com/snehamondal-data/holdings-onboarding-lakehouse">holdings-onboarding-lakehouse on GitHub</a></p>
+  </article>
+
   <article class="project" aria-labelledby="p-recon">
     <h3 id="p-recon">Payments Reconciliation Copilot</h3>
     <p class="meta">Personal project, 2026. Built forward-deployed style for a fictional payments startup, on synthetic data</p>
     <p class="proves">A reconciliation system I can prove is correct, and an AI copilot on top that can't change anything without a person.</p>
     <p>A finance team was matching three records of the same money by hand: what the payment processor says happened, what the bank actually received, and what the company's books recorded. I scoped it like a customer engagement, then built it: the three sources stream through Kafka with schema contracts and a dead-letter queue into an idempotent loader, and dbt reconciles them while respecting the bank's two-business-day settlement window. The same models run on DuckDB and Snowflake, and an Airflow DAG re-checks pending settlements daily as their windows close.</p>
-    <p>For each mismatch, a Claude-based copilot investigates through six typed, read-only tools under a least-privilege Snowflake role, then proposes a fix that a human must approve. Safety rules live in code, not the prompt. The ops team can also ask plain-English questions, answered only through governed metrics in a dbt semantic layer (MetricFlow).</p>
+    <p>For each mismatch, a Claude-based copilot investigates through six typed, read-only tools under a least-privilege Snowflake role, then proposes a fix that a human must approve. Safety rules live in code, not the prompt. The same tools are served by an MCP server that holds the read-only role, so any MCP client can investigate without credentials or SQL, and an Airflow workflow has the agent triage new exceptions into the approval queue every day. The ops team can also ask plain-English questions, answered only through governed metrics in a dbt semantic layer (MetricFlow).</p>
     <dl class="ledger" aria-label="Results">
       <div><dt>Duplicate rows after a full Kafka replay</dt><dd>0</dd></div>
       <div><dt>Planted exceptions found, no false alarms</dt><dd>30 of 30</dd></div>
       <div><dt>DuckDB vs Snowflake results</dt><dd>Identical</dd></div>
-      <div><dt>Unsafe AI proposals, 35 planted cases, with code-enforced escalation rules</dt><dd>0</dd></div>
+      <div><dt>Unsafe AI proposals, 35 planted cases, in-process and through MCP</dt><dd>0</dd></div>
     </dl>
-    <p>The model alone made one unsafe proposal: it treated an exact-amount coincidence as proof. I didn't tune the prompt against my own test set; I added a rule in code that the agent can raise concern but never lower it. A harder test, with two problems on one payment, then exposed a gap, which I fixed against freshly generated cases. The honest cost: two unnecessary escalations. <strong>328</strong> tests.</p>
+    <p>The model alone made one unsafe proposal: it treated an exact-amount coincidence as proof. I didn't tune the prompt against my own test set; I added a rule in code that the agent can raise concern but never lower it. A harder test, with two problems on one payment, then exposed a gap, which I fixed against freshly generated cases. The honest cost: two unnecessary escalations. <strong>389</strong> tests.</p>
     <p class="repo"><a href="https://github.com/snehamondal-data/payments-recon-copilot">payments-recon-copilot on GitHub</a></p>
   </article>
 
@@ -228,16 +244,16 @@ footer p{margin:0 0 .35rem}
   <h2 id="skills">What I work with</h2>
   <dl class="skills">
     <dt>Languages</dt><dd>Python, SQL, JavaScript/TypeScript, R, Java</dd>
-    <dt>Cloud and warehouse</dt><dd>GCP: BigQuery, Cloud Run, Cloud Functions, Pub/Sub, Eventarc, Cloud Tasks, Cloud Scheduler. PostgreSQL, MySQL, SQL Server, MongoDB. Snowflake (project scale)</dd>
-    <dt>Transformation and streaming</dt><dd>Dataform (in production). dbt and its semantic layer (MetricFlow), Airflow, Kafka, DuckDB (project scale). Dimensional modeling, SCD Type 2, incremental models, checkpointed backfills, idempotent replay</dd>
+    <dt>Cloud and warehouse</dt><dd>GCP: BigQuery, Cloud Run, Cloud Functions, Pub/Sub, Eventarc, Cloud Tasks, Cloud Scheduler. PostgreSQL, MySQL, SQL Server, MongoDB. Databricks (Auto Loader, Lakeflow pipelines and Jobs, Unity Catalog), Snowflake, AWS (S3, Lambda, SQS, IAM, CloudFormation) (project scale)</dd>
+    <dt>Transformation and streaming</dt><dd>Dataform (in production). PySpark, dbt and its semantic layer (MetricFlow), Airflow, Kafka, DuckDB (project scale). Medallion architecture, dimensional modeling, SCD Type 2, incremental models, checkpointed backfills, idempotent replay</dd>
     <dt>Reliability</dt><dd>Data contracts, fail-loud validation, reconciliation against source, freshness and row-count alerting, pytest, Docker, Git, CI/CD</dd>
-    <dt>AI and analytics</dt><dd>Anthropic API: LLM agents with typed tools, structured output, guardrails and evals. Looker Studio, Tableau. scikit-learn, BERT, NLP</dd>
+    <dt>AI and analytics</dt><dd>Anthropic API: LLM agents with typed tools, MCP servers, structured output, guardrails and evals. Looker Studio, Tableau. scikit-learn, BERT, NLP</dd>
   </dl>
 </section>
 
 <footer>
   <p>M.S. Data Science, Rochester Institute of Technology, 2025. B.S. (Honors) Mathematics, University of Calcutta, 2021.</p>
-  <p>Open to AI engineering, data engineering and forward deployed engineering roles. <a href="mailto:sm6503@rit.edu">sm6503@rit.edu</a></p>
+  <p>Open to forward-deployed engineering and data engineering roles. <a href="mailto:sm6503@rit.edu">sm6503@rit.edu</a></p>
 </footer>
 
 </div>
